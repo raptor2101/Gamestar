@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon
+  id="plugin.video.gamestar"
+  version="0.0.7"
+  name="GamestarVideo"
+  provider-name="Raptor 2101 [raptor2101@gmx.de]">
+  <requires>
+   <import addon="xbmc.python" version="1.0"/>
+  </requires>
+  <extension 
+    point="xbmc.python.pluginsource"
+    library="default.py">
+   <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Downloads/view videos from gamestar.de</summary>
+    <summary lang="de">Alle Videos von Gamestar.de durchsuchen und anschauen.</summary>
+    <description lang="en"></description>
+    <description lang="de">Mit diesem Plugin kann man alle Videos auf Gamestar.de anschauen.
+    Sollte es probleme mit der Verbindungsgeschwindigkeit geben, gibt es die möglichkeit mittels der config Datei das Prefetch-Verhalten zu beinflussen.
+    Am besten die config.exsample anschauen. Man kann auch mittels des fetchOfflineData-Scriptes alles videos außerhalb XBMC herunter laden. Achtung die Dateien sind groß!</description>
+    <platform>all</platform>
+  </extension>
+</addon>

@@ -1,0 +1,4 @@
+0.0.7 - Background script supports bandwidth-limitiation. Enabeling Reloadoding. Aborted Downloads no longer be played
+0.0.6 - Minor bugfixing
+0.0.5 - Added functionality to force a download before playing (prefetching)
+0.0.4 - initial release
