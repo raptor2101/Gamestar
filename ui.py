@@ -22,8 +22,9 @@ class VideoObject(object):
     self.picture = picture
 
 class GalleryObject(object):
-  def __init__(self,index,title,url,picture):
+  def __init__(self,index,title,url,picture,rootLink):
     self.index = index
     self.title = title
     self.url = url
     self.picture = picture
+    self.rootLink = rootLink

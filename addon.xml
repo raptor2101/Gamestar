@@ -15,8 +15,8 @@
   <extension point="xbmc.addon.metadata">
     <summary lang="en">Downloads/view videos from gamestar.de</summary>
     <summary lang="de">Alle Videos von Gamestar.de durchsuchen und anschauen.</summary>
-    <description lang="en"></description>
-    <description lang="de">Mit diesem Plugin kann man alle Videos auf Gamestar.de anschauen.
+    <description lang="en">This plugin gives access to the Videos from gamestar.de and gamepor.de</description>
+    <description lang="de">Mit diesem Plugin kann man alle Videos auf Gamestar.de und Gamepro.de anschauen.
     Sollte es probleme mit der Verbindungsgeschwindigkeit geben, gibt es die möglichkeit mittels der config Datei das Prefetch-Verhalten zu beinflussen.
     Am besten die config.exsample anschauen. Man kann auch mittels des fetchOfflineData-Scriptes alles videos außerhalb XBMC herunter laden. Achtung die Dateien sind groß!</description>
     <platform>all</platform>

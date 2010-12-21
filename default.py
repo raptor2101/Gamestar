@@ -59,7 +59,7 @@ gui.log("action: "+action);
 if(action == "list"):
   forcedPrecaching = forcedPrecachingConfig is not None and forcedPrecachingConfig.find("%d;"%cat)>-1;
   category = webSite.categories[cat];
-  webSite.builCategoryMenu(category.url,forcedPrecaching);
+  webSite.builCategoryMenu(category,forcedPrecaching);
 elif(action == "download"):
   gui.download(params.get("url", ""));
   gui.refresh();
