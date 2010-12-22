@@ -43,18 +43,18 @@ class GamestarWeb(object):
     
     ##setup categories
     self.categories = (
-      GalleryObject(0,"Neuste Videos","http://www.gamestar.de/index.cfm?pid=1589&ci=latest","http://images.gamestar.de/images/idgwpgsgp/bdb/2018270/b144x81.jpg", self.rootLinkGS),
-      GalleryObject(1,"Test-Videos","http://www.gamestar.de/index.cfm?pid=1589&ci=17","http://images.gamestar.de/images/idgwpgsgp/bdb/2018272/b144x81.jpg", self.rootLinkGS),
-      GalleryObject(2,"Preview-Videos","http://www.gamestar.de/index.cfm?pid=1589&ci=18","http://images.gamestar.de/images/idgwpgsgp/bdb/2018269/b144x81.jpg", self.rootLinkGS),
-      GalleryObject(3,"Video-Specials","http://www.gamestar.de/index.cfm?pid=1589&ci=20","http://images.gamestar.de/images/idgwpgsgp/bdb/2018270/b144x81.jpg", self.rootLinkGS),
-      GalleryObject(4,"Quickplay","http://www.gamestar.de/index.cfm?pid=1589&ci=19","http://images.gamestar.de/images/idgwpgsgp/bdb/2016676/b144x81.jpg", self.rootLinkGS),
-      GalleryObject(5,"Multiplayer-Duelle","http://www.gamestar.de/index.cfm?pid=1589&ci=22","http://images.gamestar.de/images/idgwpgsgp/bdb/2016431/b144x81.jpg", self.rootLinkGS),
-      GalleryObject(6,"Server Down Show","http://www.gamestar.de/index.cfm?pid=1589&ci=15","http://images.gamestar.de/images/idgwpgsgp/bdb/2018271/b144x81.jpg", self.rootLinkGS),
-      GalleryObject(7,"Public Viewing","http://www.gamestar.de/index.cfm?pid=1589&ci=37","http://images.idgentertainment.de/images/idgwpgsgp/bdb/2121485/b144x81.jpg", self.rootLinkGS),
-      GalleryObject(8,"Technik-Checks","http://www.gamestar.de/index.cfm?pid=1589&ci=32","http://images.gamestar.de/images/idgwpgsgp/bdb/2018270/b144x81.jpg", self.rootLinkGS),
-      GalleryObject(9,"Boxenstopp","http://www.gamestar.de/index.cfm?pid=1589&ci=2","http://images.gamestar.de/images/idgwpgsgp/bdb/2018274/b144x81.jpg", self.rootLinkGS),
-      GalleryObject(10,"Gamestar TV","http://www.gamestar.de/index.cfm?pid=1589&ci=1","http://images.gamestar.de/images/idgwpgsgp/bdb/2016821/b144x81.jpg", self.rootLinkGS),
-      GalleryObject(11,"Gamepro Videos","http://www.gamepro.de/videos/","", self.rootLinkGP)
+      GalleryObject(0,30001,"http://www.gamestar.de/index.cfm?pid=1589&ci=latest","http://images.gamestar.de/images/idgwpgsgp/bdb/2018270/b144x81.jpg", self.rootLinkGS),
+      GalleryObject(1,30002,"http://www.gamestar.de/index.cfm?pid=1589&ci=17","http://images.gamestar.de/images/idgwpgsgp/bdb/2018272/b144x81.jpg", self.rootLinkGS),
+      GalleryObject(2,30003,"http://www.gamestar.de/index.cfm?pid=1589&ci=18","http://images.gamestar.de/images/idgwpgsgp/bdb/2018269/b144x81.jpg", self.rootLinkGS),
+      GalleryObject(3,30004,"http://www.gamestar.de/index.cfm?pid=1589&ci=20","http://images.gamestar.de/images/idgwpgsgp/bdb/2018270/b144x81.jpg", self.rootLinkGS),
+      GalleryObject(4,30005,"http://www.gamestar.de/index.cfm?pid=1589&ci=19","http://images.gamestar.de/images/idgwpgsgp/bdb/2016676/b144x81.jpg", self.rootLinkGS),
+      GalleryObject(5,30006,"http://www.gamestar.de/index.cfm?pid=1589&ci=22","http://images.gamestar.de/images/idgwpgsgp/bdb/2016431/b144x81.jpg", self.rootLinkGS),
+      GalleryObject(6,30007,"http://www.gamestar.de/index.cfm?pid=1589&ci=15","http://images.gamestar.de/images/idgwpgsgp/bdb/2018271/b144x81.jpg", self.rootLinkGS),
+      GalleryObject(7,30008,"http://www.gamestar.de/index.cfm?pid=1589&ci=37","http://images.idgentertainment.de/images/idgwpgsgp/bdb/2121485/b144x81.jpg", self.rootLinkGS),
+      GalleryObject(8,30009,"http://www.gamestar.de/index.cfm?pid=1589&ci=32","http://images.gamestar.de/images/idgwpgsgp/bdb/2018270/b144x81.jpg", self.rootLinkGS),
+      GalleryObject(9,30010,"http://www.gamestar.de/index.cfm?pid=1589&ci=2","http://images.gamestar.de/images/idgwpgsgp/bdb/2018274/b144x81.jpg", self.rootLinkGS),
+      GalleryObject(10,30011,"http://www.gamestar.de/index.cfm?pid=1589&ci=1","http://images.gamestar.de/images/idgwpgsgp/bdb/2016821/b144x81.jpg", self.rootLinkGS),
+      GalleryObject(11,30012,"http://www.gamepro.de/videos/","", self.rootLinkGP)
       )
     ##endregion
     

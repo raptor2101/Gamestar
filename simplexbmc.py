@@ -55,12 +55,14 @@ class SimpleXbmcGui(object):
     
 
   def buildCategoryLink(self,galleryItem):
-      title = galleryItem.title
-      listItem=xbmcgui.ListItem(title, iconImage="DefaultFolder.png", thumbnailImage=galleryItem.picture)
+    addon = xbmcaddon.Addon("plugin.video.gamestar")
+    GetString = addon.getLocalizedString
+    title = GetString(galleryItem.title)
+    listItem=xbmcgui.ListItem(title, iconImage="DefaultFolder.png", thumbnailImage=galleryItem.picture)
       
-      u = "%s?&action=list&cat=%s" % (sys.argv[0], galleryItem.index)
+    u = "%s?&action=list&cat=%s" % (sys.argv[0], galleryItem.index)
       
-      xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=listItem,isFolder=True)
+    xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=listItem,isFolder=True)
   
   def openMenuContext(self):
     self.dialogProgress = xbmcgui.DialogProgress();
@@ -75,10 +77,10 @@ class SimpleXbmcGui(object):
     self.dp = xbmcgui.DialogProgress()
     self.dp.create("GamestarVideo","Downloading File",sourceUrl)
     if os.path.exists(targetFile+".tmp"):
-      os.remove(fileName+".tmp");
+      os.remove(targetFile+".tmp");
     if os.path.exists(targetFile):
-      os.remove(fileName);
-    urllib.urlretrieve(sourceUrl,fileName+".tmp",lambda nb, bs, fs, url=sourceUrl: self._pbhook(nb,bs,fs,sourceUrl,self.dp))
+      os.remove(targetFile);
+    urllib.urlretrieve(sourceUrl,targetFile+".tmp",lambda nb, bs, fs, url=sourceUrl: self._pbhook(nb,bs,fs,sourceUrl,self.dp))
     os.rename(targetFile+".tmp",targetFile);
     return targetFile;
   

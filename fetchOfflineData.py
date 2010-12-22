@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os,subprocess,urllib,re, sys, time;
 from gamestar import GamestarWeb
+from xml.dom import minidom;
 
 regex_getTargetPath = re.compile("[^/]*\\..{3}$");
 regex_getRootPath = re.compile(".*/");
@@ -27,10 +28,23 @@ class RateLimiter(object):
       self.last_update = now
 
 class OfflineGui(object):
-  def __init__(self, archivePath, rateLimiter):
-    self.archivePath = archivePath;
+  def __init__(self, configXmlPath, rateLimiter):
+    
+    self.configXml = minidom.parse(configXmlPath);
+    self.archivePath = self.getSettingValue("path");
+
+    if(self.archivePath == None):
+      print "No archive path is set"
+      sys.exit(1)
+
     self.rateLimiter = rateLimiter;
     self.targetFiles = [];
+  def getSettingValue(self, settingId):
+    settingId = unicode(settingId);
+    for settingNode in self.configXml.getElementsByTagName("setting"):
+      if(settingNode.getAttribute("id") == settingId):        
+        return settingNode.getAttribute("value");
+    return None;
   def log(self, msg):
     if type(msg) not in (str, unicode):
       print type(msg);
@@ -72,33 +86,19 @@ class OfflineGui(object):
         os.remove(fileName);
         
 cats = [];
-print sys.argv[0];
-rootPath = regex_getRootPath.search(sys.argv[0]).group();
 try:
-  rateLimiter = RateLimiter(float(sys.argv[1]));
+  rateLimiter = RateLimiter(float(sys.argv[2]));
 except:
   rateLimiter = RateLimiter(0);
 rateLimiter.__call__(0,0,0);
 
-configFilePath = os.path.join(rootPath,"config");
-    
-configFile = open(configFilePath,"r");
-for line in configFile.readlines():
-  if(line.startswith("cachePath=")):
-    archivePath = line.replace("cachePath=","").rstrip();
-  if(line.startswith("downloadCats=")):
-    line = line.replace("downloadCats=","");
-    for cat in line.split(";"):
-      try:
-        cats.append(int(cat));
-      except:
-        pass;
-        
-gui = OfflineGui(archivePath,rateLimiter);
+gui = OfflineGui(sys.argv[1],rateLimiter);
 webSite=GamestarWeb(gui);
-for cat in cats:
-  category = webSite.categories[6];
-  print "Fetching: "+category.title
-  webSite.builCategoryMenu(category.url, False);
+
+for category in webSite.categories:
+  print "%d %s\n"%(category.index,gui.getSettingValue(category.index))
+  if(gui.getSettingValue(category.index)>1): 
+    print "Fetching: %d"%category.title
+    webSite.builCategoryMenu(category, False);
   
-gui.cleanUp();
+#gui.cleanUp();

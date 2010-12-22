@@ -1,6 +1,0 @@
-cachePath=/add/some/path
-#download all files in categorie 0 (Neuste Videos) and 6 (Server Down Show)
-downloadCats=0;6;
-#force Precaching in Categorie server down show
-forcePrecaching=6; 
-#watch gamestar.py to map cat numbers to names...
