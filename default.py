@@ -15,7 +15,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>. 
-import os,xbmcgui,urllib,urllib2,re;
+import os,xbmcgui,urllib,urllib2,re,xbmcaddon;
 from gamestar import GamestarWeb
 from simplexbmc import SimpleXbmcGui;
 
@@ -35,7 +35,9 @@ def get_params():
     errorOK()
   return paramDict
 
-rootPath = os.getcwd();
+__settings__ = xbmcaddon.Addon(id='plugin.video.gamestar')
+rootPath = __settings__.getAddonInfo('path');
+
 configFilePath = os.path.join(rootPath,"config");
 archivePath = None
 forcedPrecachingConfig = None
