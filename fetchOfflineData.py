@@ -101,4 +101,4 @@ for category in webSite.categories:
     print "Fetching: %d"%category.title
     webSite.builCategoryMenu(category, False);
   
-#gui.cleanUp();
+gui.cleanUp();
