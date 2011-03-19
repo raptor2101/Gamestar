@@ -41,6 +41,7 @@ rootPath = __settings__.getAddonInfo('path');
 archivePath = __settings__.getSetting('path');
 if(archivePath == ""):
   archivePath = None;
+  
 gui = SimpleXbmcGui(archivePath);
 webSite=GamestarWeb(gui);
 
