@@ -39,6 +39,8 @@ __settings__ = xbmcaddon.Addon(id='plugin.video.gamestar')
 rootPath = __settings__.getAddonInfo('path');
 
 archivePath = __settings__.getSetting('path');
+if(archivePath == ""):
+  archivePath = None;
 gui = SimpleXbmcGui(archivePath);
 webSite=GamestarWeb(gui);
 
@@ -50,7 +52,7 @@ gui.log("action: "+action);
 
 if(action == "list"):
   forcedPrecaching = __settings__.getSetting(params.get("cat", 0));
-  forcedPrecaching = archivePath is not "" and (forcedPrecaching == '1' or forcedPrecaching == '3')
+  forcedPrecaching = archivePath is not None and (forcedPrecaching == '1' or forcedPrecaching == '3')
   category = webSite.categories[cat];
   webSite.builCategoryMenu(category,forcedPrecaching);
 elif(action == "download"):
