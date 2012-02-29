@@ -16,15 +16,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>. 
 class VideoObject(object):
-  def __init__(self,title,url,picture):
+  def __init__(self, title, url, picture, sourceName):
     self.title = title
     self.url = url
     self.picture = picture
+    self.sourceName = sourceName
 
 class GalleryObject(object):
-  def __init__(self,index,title,url,picture,rootLink):
-    self.index = index
-    self.title = title
+  def __init__(self,url,pictureLink):
     self.url = url
-    self.picture = picture
-    self.rootLink = rootLink
+    self.pictureLink = pictureLink

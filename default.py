@@ -17,6 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>. 
 import os,xbmcgui,urllib,urllib2,re,xbmcaddon;
 from gamestar import GamestarWeb
+from gamepro import GameproWeb
 from simplexbmc import SimpleXbmcGui;
 
 
@@ -38,32 +39,41 @@ def get_params():
 __settings__ = xbmcaddon.Addon(id='plugin.video.gamestar')
 rootPath = __settings__.getAddonInfo('path');
 
-archivePath = __settings__.getSetting('path');
-if(archivePath == ""):
-  archivePath = None;
-  
-gui = SimpleXbmcGui(archivePath);
-webSite=GamestarWeb(gui);
+gui = SimpleXbmcGui(" ");
+
+displayGamestar = __settings__.getSetting('gamestar') == "true";
+displayGamepro = __settings__.getSetting('gamepro') == "true";
+displayYoutube = __settings__.getSetting('youtube') == "true";
+displayYoutube = __settings__.getSetting('show_shortname') == "true";
+
 
 gui.openMenuContext();
 params=get_params()
 action=params.get("action", "")
 cat=int(params.get("cat", 0))
 gui.log("action: "+action);
+gui.log("cat: %s"%cat);
 
 if(action == "list"):
-  forcedPrecaching = __settings__.getSetting(params.get("cat", 0));
-  forcedPrecaching = archivePath is not None and (forcedPrecaching == '1' or forcedPrecaching == '3')
-  category = webSite.categories[cat];
-  webSite.builCategoryMenu(category,forcedPrecaching);
-elif(action == "download"):
-  gui.download(params.get("url", ""));
-  gui.refresh();
-elif(action == "downloadPlay"):  
-  mediaPath = gui.download(params.get("url", ""));
-  gui.play(mediaPath);
-  gui.refresh();
+  videoObjects = [];  
+  if(displayGamestar):
+    website = GamestarWeb(gui);
+    videoObjects.extend(website.getVideoLinkObjects(cat))
+  if(displayGamepro):
+    website = GameproWeb(gui);
+    videoObjects.extend(website.getVideoLinkObjects(cat))
+  gui.buildVideoLink(videoObjects);
 else:
-  webSite.buildCategoryMenu();
+  categories = {};
+  if(displayGamestar):
+    website = GamestarWeb(gui);
+    for (index,pictureLink) in website.getCategories().iteritems(): 
+      categories[index]=pictureLink;
+  if(displayGamepro):
+    website = GameproWeb(gui);
+    for (index,pictureLink) in website.getCategories().iteritems():
+      if index not in categories:
+        categories[index]=pictureLink;
+  gui.showCategories(categories);
 
 gui.closeMenuContext();

@@ -15,85 +15,48 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>. 
-import xbmc, xbmcgui, xbmcplugin,xbmcaddon, sys, urllib, urllib2, os,re
+import xbmc, xbmcgui, xbmcplugin,xbmcaddon, sys, urllib, urllib2, os, re, time
 __plugin__ = "Gamestar"
 
 regex_getTargetPath = re.compile("[^/]*\\..{3}$");
 
 class SimpleXbmcGui(object):
-  def __init__(self, archivePath):
-    self.archivePath = archivePath;
+  def __init__(self, showSourcename):
+    self.showSourcename = showSourcename;
     
   def log(self, msg):
     if type(msg) not in (str, unicode):
-      xbmc.output("[%s]: %s" % (__plugin__, type(msg)))
+      xbmc.log("[%s]: %s" % (__plugin__, type(msg)))
     else:
-      xbmc.output("[%s]: %s" % (__plugin__, msg.encode('utf8')))
+      xbmc.log("[%s]: %s" % (__plugin__, msg.encode('utf8')))
     
-  def buildVideoLink(self,videoItem,forcePrecaching):
-    
-    title = videoItem.title
-    listItem=xbmcgui.ListItem(title, iconImage="DefaultFolder.png", thumbnailImage=videoItem.picture)
-    
-    if(not forcePrecaching):
-      listItem.setProperty('IsPlayable', 'true');
-      
-    url = videoItem.url;
-    if(self.archivePath is not None):
-      targetFile = regex_getTargetPath.search(url).group()
-      targetFile = os.path.join(self.archivePath, targetFile);
-      if(os.path.exists(targetFile)):
-        url = targetFile;
-        listItem.addContextMenuItems([("Download","XBMC.RunPlugin(%s?url=%s&action=download)"%(sys.argv[0],url))])
-      elif(forcePrecaching):
-        listItem.addContextMenuItems([("Download","XBMC.RunPlugin(%s?url=%s&action=downloadPlay)"%(sys.argv[0],url))])
-        url = "%s?url=%s&action=downloadPlay"%(sys.argv[0],url);
+  def buildVideoLink(self, videoItems):
+    for videoItem in videoItems:
+      if(self.showSourcename):
+        title = "[%s] %s"%(videoItem.sourceName, videoItem.title)
       else:
-        listItem.addContextMenuItems([("Download","XBMC.RunPlugin(%s?url=%s&action=download)"%(sys.argv[0],url))])
-    self.log(url);  
-    xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=listItem,isFolder=False)
+        title = "%s"%(videoItem.title)
+      listItem=xbmcgui.ListItem(title, iconImage="DefaultFolder.png", thumbnailImage=videoItem.picture)
+        
+      url = videoItem.url;
+      xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=listItem,isFolder=False)
     
 
-  def buildCategoryLink(self,galleryItem):
-    addon = xbmcaddon.Addon("plugin.video.gamestar")
-    GetString = addon.getLocalizedString
-    title = GetString(galleryItem.title)
-    listItem=xbmcgui.ListItem(title, iconImage="DefaultFolder.png", thumbnailImage=galleryItem.picture)
+  def showCategories(self,categorieItems):
+    for (index,pictureLink) in categorieItems.iteritems():    
+      addon = xbmcaddon.Addon("plugin.video.gamestar")
       
-    u = "%s?&action=list&cat=%s" % (sys.argv[0], galleryItem.index)
-      
-    xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=listItem,isFolder=True)
+      title = addon.getLocalizedString(index)
+      listItem=xbmcgui.ListItem(title, iconImage="DefaultFolder.png", thumbnailImage=pictureLink)
+      u = "%s?&action=list&cat=%s" % (sys.argv[0], index)
+        
+      xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=listItem,isFolder=True)
   
   def openMenuContext(self):
     self.dialogProgress = xbmcgui.DialogProgress();
   
   def closeMenuContext(self):
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
-  
-  def download(self, sourceUrl):
-    targetFile = regex_getTargetPath.search(sourceUrl).group();
-    targetFile = os.path.join(self.archivePath,targetFile);
-    self.log("starte download %s to %s "%(sourceUrl,targetFile));
-    self.dp = xbmcgui.DialogProgress()
-    self.dp.create("GamestarVideo","Downloading File",sourceUrl)
-    if os.path.exists(targetFile+".tmp"):
-      os.remove(targetFile+".tmp");
-    if os.path.exists(targetFile):
-      os.remove(targetFile);
-    urllib.urlretrieve(sourceUrl,targetFile+".tmp",lambda nb, bs, fs, url=sourceUrl: self._pbhook(nb,bs,fs,sourceUrl,self.dp))
-    os.rename(targetFile+".tmp",targetFile);
-    return targetFile;
-  
-  def _pbhook(self, numblocks, blocksize, filesize, url=None,dp=None):
-    try:
-      percent = min((numblocks*blocksize*100)/filesize, 100)
-      self.dp.update(percent)
-    except:
-      percent = 100
-      self.dp.update(percent)
-      if dp.iscanceled():
-        self.dp.close()
-        sys.exit("Download aborted")
         
   def refresh(self):
     xbmc.executebuiltin("Container.Refresh");

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #-------------LicenseHeader--------------
-# plugin.video.gamestar - Downloads/view videos from gamestar.de
+# plugin.video.gamestar - Downloads/view videos from gamepro.de
 # Copyright (C) 2010  Raptor 2101 [raptor2101@gmx.de]
 #
 # This program is free software: you can redistribute it and/or modify
@@ -15,26 +15,31 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>. 
-import urllib, re, time;
+import urllib, re, time
 from ui import *;
 
-class GamestarWeb(object):
+class GameproWeb(object):
   def __init__(self, gui):
     self.gui = gui;
-    self.rootLink = "http://www.gamestar.de/";
-    self.shortName = "GS";
-
+    self.rootLink = "http://www.gamepro.de";
+    self.shortName = "GP";
+    
     ##setup regular expressions
-    self.imageRegex = "<img src=\".*\" width=\"\\d*\" height=\"\\d*\" alt=\".*\" title=\".*\" />"
-    self.linkRegex =  "/index.cfm\\?pid=\\d*?(&amp;|&)pk=\\d*?"
-    self.simpleLinkRegex = "<a href=\""+self.linkRegex+"\" .+?>.+?</a>";
-    self.hrefRegex = "<a href=\""+self.linkRegex+"\">"
-    self.headerRegex ="<strong>.+</strong>\\s*.*\\s*</a>"
+    self.imageRegex = "<img src=\".*\" width=\"\\d*\" height=\"\\d*\" alt=\".*\" />"
+    self.linkRegex =  "/.*?,\\d*?\\.html"
+
+
+
+
+    self.hrefRegex = "<a (class=\".*?\" ){0,1}href=\""+self.linkRegex+"\" .+?>"
+    self.headerRegex ="<strong>.+?</strong>\\s*.*\\s*</a>"
     self.titleRegex = "<a.*?>(.*?)</a>"
+    self.simpleLinkRegex = "<a href=\""+self.linkRegex+"\" .+?>.+?</a>";
+
 
     self._regEx_extractVideoThumbnail = re.compile("<div class=\"videoPreview\">\\s*"+self.hrefRegex+"\\s*"+self.imageRegex+"\\s*</a>\\s*<span>\\s*"+self.hrefRegex+"\\s*"+self.headerRegex);
     self._regEx_extractTargetLink = re.compile(self.linkRegex);
-    self._regEx_extractVideoID = re.compile("pk=\\d*");
+    self._regEx_extractVideoID = re.compile(",(\\d+)\\.html");
     self._regEx_extractVideoLink = re.compile("http.*(mp4|flv)");
     self._regEx_extractPictureLink = re.compile("http://.*.jpg");
     self._regEx_extractHeader = re.compile(self.headerRegex);
@@ -42,21 +47,17 @@ class GamestarWeb(object):
     self._regEx_extractTitle = re.compile(self.titleRegex);
     ##end setup
     
-    linkRoot = self.rootLink+"index.cfm?pid=1589&ci=";
-    imageRoot = "http://images.gamestar.de/images/idgwpgsgp/bdb/";    
+    link = self.rootLink + "/templates/gamepro/videos/portal/getChannelOverview.cfm";
 
     ##setup categories
     self.categories = {
-      30001:GalleryObject(linkRoot+"latest", imageRoot+"/2018270/b144x81.jpg"),
-      30002:GalleryObject(linkRoot+"17",imageRoot+"2018272/b144x81.jpg"),
-      30003:GalleryObject(linkRoot+"18",imageRoot+"bdb/2018269/b144x81.jpg"),
-      30004:GalleryObject(linkRoot+"20",imageRoot+"2018270/b144x81.jpg"),
-      30005:GalleryObject(linkRoot+"9",imageRoot+"bdb/2016676/b144x81.jpg"),
-      30006:GalleryObject(linkRoot+"22",imageRoot+"2016431/b144x81.jpg"),
-      30007:GalleryObject(linkRoot+"15",imageRoot+"2018271/b144x81.jpg"),
-      30008:GalleryObject(linkRoot+"37",imageRoot+"2121485/b144x81.jpg"),
-      30009:GalleryObject(linkRoot+"32",imageRoot+"2018270/b144x81.jpg"),
-      30010:GalleryObject(linkRoot+"2",imageRoot+"2018274/b144x81.jpg"),
+      30001:GalleryObject(link+"?channelName=latest&p=1&channelMaster=0",""),
+      30002:GalleryObject(link+"?channelId=17&p=1&channelMaster=0",""),
+      30003:GalleryObject(link+"?channelId=18&p=1&channelMaster=0",""),
+      30004:GalleryObject(link+"?channelId=20&p=1&channelMaster=0",""),
+      30009:GalleryObject(link+"?channelId=32&p=1&channelMaster=0",""),
+      30010:GalleryObject(link+"?channelId=2&p=1&channelMaster=0",""),
+      30011:GalleryObject(link+"?channelId=3&p=1&channelMaster=0",""),
       }
     ##endregion
     
@@ -70,17 +71,17 @@ class GamestarWeb(object):
     videoObjects = [];
     if categorie in self.categories:
       categorie = self.categories[categorie];
-      self.gui.log(categorie.url);
       rootDocument = self.loadPage(categorie.url);
-      for videoThumbnail in self._regEx_extractVideoThumbnail.finditer(rootDocument):       
+      for videoThumbnail in self._regEx_extractVideoThumbnail.finditer(rootDocument):
+        
         videoThumbnail = videoThumbnail.group()
-        videoID = self._regEx_extractVideoID.search(videoThumbnail).group().replace("pk=","");
+        videoID = self._regEx_extractVideoID.search(videoThumbnail).group(1);
         
         header = self._regEx_extractHeader.search(videoThumbnail).group();
         header = re.sub("(<strong>)|(</strong>)|(</a>)", "", header);
         header = re.sub("\\s+", " ", header);
-        
-        try:
+                
+        try:  
           videoObjects.append(self.loadVideoPage(header, videoID));
         except:
           pass;
