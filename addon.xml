@@ -34,5 +34,6 @@
     Die beiden letzten Optionen brauchen ein Background-Script das vom Taskplanner oder (ana)cron angestoßen wird. Es ist im Addon-Verzeichniss zu finden: fetchOfflineData.py Pfad-Zur-Config.xml BandbreitenBegrenzung(in kbs)
     </description>
     <platform>all</platform>
+    <language>de</language>
   </extension>
 </addon>
