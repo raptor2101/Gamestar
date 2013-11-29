@@ -35,5 +35,10 @@
     </description>
     <platform>all</platform>
     <language>de</language>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
+    <forum>https://github.com/raptor2101/Gamestar/issues</forum>
+    <website>https://github.com/raptor2101/Gamestar</website>
+    <source>https://github.com/raptor2101/Gamestar</source>
+    <email>raptor2101@gmx.de</email>
   </extension>
 </addon>
