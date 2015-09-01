@@ -36,7 +36,7 @@ class GamestarWeb(object):
 
     ##setup categories
     self.categories = {
-      30001:GalleryObject(linkRoot+"latest", imageRoot+"/2018270/b144x81.jpg"),
+      30001:GalleryObject(linkRoot+"latest/", imageRoot+"/2018270/b144x81.jpg"),
       30002:GalleryObject(linkRoot+"tests,17/",imageRoot+"2018272/b144x81.jpg"),
       30003:GalleryObject(linkRoot+"previews,18/",imageRoot+"bdb/2018269/b144x81.jpg"),
       30004:GalleryObject(linkRoot+"specials,20/",imageRoot+"2018270/b144x81.jpg"),
@@ -60,12 +60,14 @@ class GamestarWeb(object):
       rootDocument = self.loadPage(categorie.url);
       
       videoIds = set();
+      
       for match in self._regEx_extractVideoID.finditer(rootDocument):       
         videoId = match.group(1);
+        
         if(videoId not in videoIds):
           videoIds.add(videoId);
           
-      for videoId in videoIds:        
+      for videoId in sorted(videoIds, reverse=True):        
         try:
           videoObjects.append(self.loadVideoPage(videoId));
         except:
@@ -79,8 +81,8 @@ class GamestarWeb(object):
 
   def loadVideoPage(self, videoID):
     self.gui.log(self.rootLink+"/emb/getVideoData.cfm?vid="+videoID);
-    configDoc = self.loadPage(self.rootLink+"/emb/getVideoData.cfm?vid="+videoID);
-    videoLink = unicode(self._regEx_extractVideoLink.search(configDoc).group());
+    configDoc = self.loadPage(self.rootLink+"/emb/getVideoData.cfm?vid="+videoID).decode('utf-8');
+    videoLink = self._regEx_extractVideoLink.search(configDoc).group();
     videoLink = self.replaceXmlEntities(videoLink);
     thumbnailLink = self._regEx_extractPictureLink.search(configDoc).group();
     title = self._regEx_extractTitle.search(configDoc).group(1);
@@ -88,7 +90,7 @@ class GamestarWeb(object):
     
     if(not thumbnailLink.startswith('http://')):
       thumbnailLink = thumbnailLink.replace("//",'http://');
-    thumbnailLink = unicode(thumbnailLink);
+    thumbnailLink = thumbnailLink;
     
     return VideoObject(title, videoLink, thumbnailLink, self.shortName);
   
