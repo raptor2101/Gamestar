@@ -15,10 +15,8 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import xbmc, xbmcgui, xbmcplugin,xbmcaddon, sys, urllib, urllib2, os, re, time
+import xbmc, xbmcgui, xbmcplugin,xbmcaddon, sys
 __plugin__ = "Gamestar"
-
-regex_getTargetPath = re.compile("[^/]*\\..{3}$");
 
 class SimpleXbmcGui(object):
   def __init__(self, showSourcename):

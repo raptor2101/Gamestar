@@ -15,7 +15,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import urllib, re, time,traceback;
+import urllib2, re, time;
 from ui import *;
 
 
@@ -119,11 +119,11 @@ class Source(object):
   def loadPage(self,url):
     try:
       safe_url = url.replace( " ", "%20" ).replace("&amp;","&")
-      sock = urllib.urlopen( safe_url )
+      sock = urllib2.urlopen( safe_url )
       doc = sock.read()
       if doc:
         return doc
       else:
         return ''
-    except:
+    except (urllib2.HTTPError, ValueError, TypeError, IOError):
       return ''
