@@ -36,24 +36,24 @@ class SimpleXbmcGui(object):
       else:
         title = "%s"%(videoItem.title)
       listItem=xbmcgui.ListItem(title, iconImage="DefaultFolder.png", thumbnailImage=videoItem.picture)
-        
+
       url = videoItem.url;
       xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=listItem,isFolder=False)
-    
+
   @classmethod
   def showCategories(self,categorieItems):
     for (index,pictureLink) in categorieItems.iteritems():
       addon = xbmcaddon.Addon("plugin.video.gamestar")
-      
+
       title = addon.getLocalizedString(index)
       listItem=xbmcgui.ListItem(title, iconImage="DefaultFolder.png", thumbnailImage=pictureLink)
       u = "%s?&action=list&cat=%s" % (sys.argv[0], index)
-        
+
       xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=listItem,isFolder=True)
-  
+
   def openMenuContext(self):
     self.dialogProgress = xbmcgui.DialogProgress();
-  
+
   @classmethod
   def closeMenuContext(self):
     xbmcplugin.endOfDirectory(int(sys.argv[1]))

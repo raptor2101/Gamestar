@@ -24,7 +24,7 @@ class GameproWeb(Source):
 
     self.rootLink = "http://www.gamepro.de/";
     self.shortName = "GP";
-    
+
     linkRoot = self.rootLink+"videos/";
     imageRoot = "http://images.gamepro.de/images/idgwpgsgp/bdb/";
     ##setup categories

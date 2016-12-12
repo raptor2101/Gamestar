@@ -67,7 +67,7 @@ else:
   categories = {};
   if(displayGamestar):
     website = GamestarWeb(gui);
-    for (index,pictureLink) in website.getCategories().iteritems(): 
+    for (index,pictureLink) in website.getCategories().iteritems():
       categories[index]=pictureLink;
   if(displayGamepro):
     website = GameproWeb(gui);

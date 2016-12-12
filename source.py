@@ -15,7 +15,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import urllib2, re, time;
+import urllib2, re;
 from ui import *;
 
 
@@ -27,13 +27,13 @@ class Source(object):
     self.regexVideoObject = re.compile("<a href=\"(/videos/.*?,\\d*?\\.html)\" title=\"(.*?)\">\\s*<img src=\"(.*?)\"");
     self.regexLink = re.compile("/videos/media,\\d+?(,(\\d)){0,1}\\.html");
     ##end setup
-    
+
   def getCategories(self):
     categories={};
     for key in self.categories.keys():
       categories[key]=self.categories[key].pictureLink;
     return categories;
-  
+
   def getVideoLinkObjects(self, categorie):
     videoObjects = [];
     if categorie in self.categories:
@@ -42,7 +42,7 @@ class Source(object):
       rootDocument = self.loadPage(categorie.url);
 
       for match in self.regexVideoObject.finditer(rootDocument):
-        
+
         title = match.group(2);
         thumbnailLink = match.group(3);
         if(not thumbnailLink.startswith('http://')):
@@ -77,11 +77,11 @@ class Source(object):
     thumbnailLink = self._regEx_extractPictureLink.search(configDoc).group();
     title = self._regEx_extractTitle.search(configDoc).group(1);
     title = self.transformHtmlCodes(title);
-    
+
     if(not thumbnailLink.startswith('http://')):
       thumbnailLink = thumbnailLink.replace("//",'http://');
     thumbnailLink = thumbnailLink;
-    
+
     return VideoObject(title, videoLink, thumbnailLink, self.shortName)
 
   @classmethod
