@@ -23,9 +23,9 @@ regex_getTargetPath = re.compile("[^/]*\\..{3}$");
 class SimpleXbmcGui(object):
   def __init__(self, showSourcename):
     self.showSourcename = showSourcename;
-    
+
   def log(self, msg):
-    if type(msg) not in (str, unicode):
+    if not isinstance(msg, str) and not isinstance(msg, unicode):
       xbmc.log("[%s]: %s" % (__plugin__, type(msg)))
     else:
       xbmc.log("[%s]: %s" % (__plugin__, msg.encode('utf8')))
@@ -43,7 +43,7 @@ class SimpleXbmcGui(object):
     
 
   def showCategories(self,categorieItems):
-    for (index,pictureLink) in categorieItems.iteritems():    
+    for (index,pictureLink) in categorieItems.iteritems():
       addon = xbmcaddon.Addon("plugin.video.gamestar")
       
       title = addon.getLocalizedString(index)
@@ -55,9 +55,11 @@ class SimpleXbmcGui(object):
   def openMenuContext(self):
     self.dialogProgress = xbmcgui.DialogProgress();
   
+  @classmethod
   def closeMenuContext(self):
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
-        
+
+  @classmethod
   def refresh(self):
     xbmc.executebuiltin("Container.Refresh");
   
@@ -73,6 +75,6 @@ class SimpleXbmcGui(object):
     if not msg:
       msg = "ERROR!"
     if(e == None):
-      xbmcgui.Dialog().ok( title, msg, e )  
+      xbmcgui.Dialog().ok( title, msg, e )
     else:
       xbmcgui.Dialog().ok( title, msg)  
