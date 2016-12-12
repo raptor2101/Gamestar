@@ -14,7 +14,7 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>. 
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from source import Source
 from ui import *;
 
@@ -41,4 +41,3 @@ class GamestarWeb(Source):
       30106:GalleryObject(linkRoot+"news,100/","http://4images.cgames.de/images/idgwpgsgp/bdb/2764165/446x251.jpg"),
       }
     ##endregion
- 

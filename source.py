@@ -22,7 +22,7 @@ from ui import *;
 class Source(object):
   def __init__(self, gui):
     self.gui = gui;
-    
+
     ##setup regular expressions
     self.regexVideoObject = re.compile("<a href=\"(/videos/.*?,\\d*?\\.html)\" title=\"(.*?)\">\\s*<img src=\"(.*?)\"");
     self.regexLink = re.compile("/videos/media,\\d+?(,(\\d)){0,1}\\.html");
@@ -40,8 +40,6 @@ class Source(object):
       categorie = self.categories[categorie];
       self.gui.log(categorie.url);
       rootDocument = self.loadPage(categorie.url);
-
-      videoIds = set();
 
       for match in self.regexVideoObject.finditer(rootDocument):
         
