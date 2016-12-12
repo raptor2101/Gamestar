@@ -14,8 +14,8 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>. 
-import os,xbmcgui,urllib,urllib2,re,xbmcaddon;
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+import xbmcaddon;
 from gamestar import GamestarWeb
 from gamepro import GameproWeb
 from simplexbmc import SimpleXbmcGui;
@@ -32,7 +32,7 @@ def get_params():
 	paramSplits = paramsPair.split('=')
 	if (len(paramSplits))==2:
 	  paramDict[paramSplits[0]] = paramSplits[1]
-  except:
+  except (ValueError,IndexError):
     errorOK()
   return paramDict
 
