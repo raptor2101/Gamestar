@@ -55,7 +55,7 @@ gui.log("action: "+action);
 gui.log("cat: %s"%cat);
 
 if(action == "list"):
-  videoObjects = [];  
+  videoObjects = [];
   if(displayGamestar):
     website = GamestarWeb(gui);
     videoObjects.extend(website.getVideoLinkObjects(cat))

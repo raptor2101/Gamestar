@@ -14,7 +14,7 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>. 
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import urllib, re, time,traceback;
 from ui import *;
 
@@ -40,10 +40,10 @@ class Source(object):
       categorie = self.categories[categorie];
       self.gui.log(categorie.url);
       rootDocument = self.loadPage(categorie.url);
-      
+
       videoIds = set();
-      
-      for match in self.regexVideoObject.finditer(rootDocument):      
+
+      for match in self.regexVideoObject.finditer(rootDocument):
         
         title = match.group(2);
         thumbnailLink = match.group(3);
@@ -53,7 +53,7 @@ class Source(object):
         self.gui.log(videoPageLink);
         videoPage=self.loadPage(videoPageLink);
         matches= list(self.regexLink.finditer(videoPage));
-        if len(matches) == 0: 
+        if len(matches) == 0:
           continue;
         if len(matches) == 1:
           link = self.rootLink+matches[0].group(0);
@@ -85,7 +85,8 @@ class Source(object):
     thumbnailLink = thumbnailLink;
     
     return VideoObject(title, videoLink, thumbnailLink, self.shortName)
-  
+
+  @classmethod
   def replaceXmlEntities(self, link):
     entities = (
         ("%3A",":"),("%2F","/"),("%3D","="),("%3F","?"),("%26","&")
@@ -93,6 +94,8 @@ class Source(object):
     for entity in entities:
        link = link.replace(entity[0],entity[1]);
     return link;
+
+  @classmethod
   def transformHtmlCodes(self,string):
     replacements = (
       (u'Ä', u'&Auml;'),
@@ -111,6 +114,8 @@ class Source(object):
     for replacement in replacements:
       string = string.replace(replacement[1],replacement[0]);
     return string;
+
+  @classmethod
   def loadPage(self,url):
     try:
       safe_url = url.replace( " ", "%20" ).replace("&amp;","&")

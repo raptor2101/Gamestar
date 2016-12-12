@@ -21,12 +21,12 @@ from ui import *;
 class GamestarWeb(Source):
   def __init__(self, gui):
     super(GamestarWeb, self).__init__(gui);
-    
+
     self.rootLink = "http://www.gamestar.de/";
     self.shortName = "GS";
-    
+
     linkRoot = self.rootLink+"videos/";
-    imageRoot = "http://images.gamestar.de/images/idgwpgsgp/bdb/";    
+    imageRoot = "http://images.gamestar.de/images/idgwpgsgp/bdb/";
     ##setup categories
     self.categories = {
       30001:GalleryObject(linkRoot+"alle-videos,9100,newest/", imageRoot+"/2018270/b144x81.jpg"),

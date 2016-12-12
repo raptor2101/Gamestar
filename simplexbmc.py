@@ -14,7 +14,7 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>. 
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import xbmc, xbmcgui, xbmcplugin,xbmcaddon, sys, urllib, urllib2, os, re, time
 __plugin__ = "Gamestar"
 
@@ -24,12 +24,13 @@ class SimpleXbmcGui(object):
   def __init__(self, showSourcename):
     self.showSourcename = showSourcename;
 
+  @classmethod
   def log(self, msg):
     if not isinstance(msg, str) and not isinstance(msg, unicode):
       xbmc.log("[%s]: %s" % (__plugin__, type(msg)))
     else:
       xbmc.log("[%s]: %s" % (__plugin__, msg.encode('utf8')))
-    
+
   def buildVideoLink(self, videoItems):
     for videoItem in videoItems:
       if(self.showSourcename):
@@ -41,7 +42,7 @@ class SimpleXbmcGui(object):
       url = videoItem.url;
       xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=listItem,isFolder=False)
     
-
+  @classmethod
   def showCategories(self,categorieItems):
     for (index,pictureLink) in categorieItems.iteritems():
       addon = xbmcaddon.Addon("plugin.video.gamestar")
@@ -62,11 +63,12 @@ class SimpleXbmcGui(object):
   @classmethod
   def refresh(self):
     xbmc.executebuiltin("Container.Refresh");
-  
+
+  @classmethod
   def play(self, path):
     player = xbmc.Player();
     player.play(path);
-  
+
   def errorOK(self,title="", msg=""):
     e = str( sys.exc_info()[ 1 ] )
     self.log(e)
@@ -77,4 +79,4 @@ class SimpleXbmcGui(object):
     if(e == None):
       xbmcgui.Dialog().ok( title, msg, e )
     else:
-      xbmcgui.Dialog().ok( title, msg)  
+      xbmcgui.Dialog().ok( title, msg)

@@ -14,19 +14,19 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>. 
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from source import Source
 from ui import *;
 
 class GameproWeb(Source):
   def __init__(self, gui):
     super(GameproWeb, self).__init__(gui);
-    
+
     self.rootLink = "http://www.gamepro.de/";
     self.shortName = "GP";
     
     linkRoot = self.rootLink+"videos/";
-    imageRoot = "http://images.gamepro.de/images/idgwpgsgp/bdb/";    
+    imageRoot = "http://images.gamepro.de/images/idgwpgsgp/bdb/";
     ##setup categories
     self.categories = {
       30001:GalleryObject(linkRoot+"alle-videos,9200,newest/", imageRoot+"/2018270/b144x81.jpg"),
